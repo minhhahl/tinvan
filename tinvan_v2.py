@@ -140,7 +140,7 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
 
 # Main
 
-if 1:
+if 0:
     # Load the data that PHP sent us
     try:
         data = json.loads(base64.b64decode(sys.argv[1]))     
