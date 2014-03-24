@@ -105,14 +105,14 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
     
     file_dir = os.path.dirname(os.path.abspath(__file__))
     # Add vietnam stopword
-    with codecs.open(file_dir + '/stopwords_vn_s1.txt', 'r', 'utf-8') as text_file:
-        text = text_file.read()
-        text = text.encode('utf-8')
-        tokens_vn = nltk.tokenize.word_tokenize(str(text))
-        tokens_vn = [w for w in tokens_vn if not w in stopset]
+#    with codecs.open(file_dir + '/stopwords_vn_s1.txt', 'r', 'utf-8') as text_file:
+#        text = text_file.read()
+#        text = text.encode('utf-8')
+#        tokens_vn = nltk.tokenize.word_tokenize(str(text))
+#        tokens_vn = [w for w in tokens_vn if not w in stopset]
 #        print tokens_vn
         
-    stopset = stopset.union(set(tokens_vn))
+#    stopset = stopset.union(set(tokens_vn))
 #    stopset = set(tokens_vn)
 
     top_n_words = [w[0] for w in fdist.items() 
@@ -152,7 +152,7 @@ if has_url:
     # Load the data that PHP sent us
     try:
         data = json.loads(base64.b64decode(argv1))
-        sample_url = data['url']
+        sample_url = data['url'] + "1"
 
         summary = summarize(url=sample_url)
         
@@ -160,8 +160,9 @@ if has_url:
         str_mean = " ".join(summary['mean_scored_summary'])
          
         result = { 'status': 'OK', 'top_n': str_top_n, 'mean': str_mean }
-    except:
-        result = {'status': 'ERROR'}
+    except Exception, e:
+        result = { 'status': 'ERROR' }
+        print e
             
     # Send it to stdout (to PHP)
     print json.dumps(result)
