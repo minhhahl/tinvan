@@ -4,6 +4,7 @@ import sys
 import codecs
 import sys
 import base64
+import traceback
 import json
 import nltk
 import numpy
@@ -152,7 +153,7 @@ if has_url:
     # Load the data that PHP sent us
     try:
         data = json.loads(base64.b64decode(argv1))
-        sample_url = data['url'] + "1"
+        sample_url = data['url']
 
         summary = summarize(url=sample_url)
         
@@ -161,8 +162,7 @@ if has_url:
          
         result = { 'status': 'OK', 'top_n': str_top_n, 'mean': str_mean }
     except Exception, e:
-        result = { 'status': 'ERROR' }
-        print e
+        result = { 'status': 'ERROR', 'message': traceback.format_exc() }
             
     # Send it to stdout (to PHP)
     print json.dumps(result)
