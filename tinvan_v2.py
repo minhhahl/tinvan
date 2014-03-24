@@ -1,4 +1,5 @@
 # coding=UTF-8
+import os
 import sys
 import codecs
 import sys
@@ -102,8 +103,9 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
 #    print stopset
     
     
+    file_dir = os.path.dirname(os.path.abspath(__file__))
     # Add vietnam stopword
-    with codecs.open('stopwords_vn_s1.txt', 'r', 'utf-8') as text_file:
+    with codecs.open(file_dir + '/stopwords_vn_s1.txt', 'r', 'utf-8') as text_file:
         text = text_file.read()
         text = text.encode('utf-8')
         tokens_vn = nltk.tokenize.word_tokenize(str(text))
@@ -138,19 +140,13 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
     return dict(top_n_summary=[sentences[idx] for (idx, score) in top_n_scored],
                 mean_scored_summary=[sentences[idx] for (idx, score) in mean_scored])
 
-# Main
-try:
-    sys.argv[1]
-    has_url = 1
-except:    
-    has_url = 0
-    
-if has_url:
+# Main   
+if 1:
     # Load the data that PHP sent us
     try:
-        data = json.loads(base64.b64decode(sys.argv[1]))
-        sample_url = data['url']
-        
+#        data = json.loads(base64.b64decode(sys.argv[1]))
+#        sample_url = data['url']  
+        sample_url = 'http://dantri.com.vn/nhip-song-tre/ong-truong-gia-binh-thanh-cong-den-tu-dam-me-va-khac-biet-853163.htm'        
         summary = summarize(url=sample_url)
         
         str_top_n = " ".join(summary['top_n_summary'])
