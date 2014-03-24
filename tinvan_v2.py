@@ -153,8 +153,6 @@ if has_url:
     try:
         data = json.loads(base64.b64decode(argv1))
         sample_url = data['url']
-        
-        print sample_url  
 
         summary = summarize(url=sample_url)
         
