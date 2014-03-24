@@ -140,12 +140,21 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
     return dict(top_n_summary=[sentences[idx] for (idx, score) in top_n_scored],
                 mean_scored_summary=[sentences[idx] for (idx, score) in mean_scored])
 
-# Main   
-if 1:
+# Main
+try:
+    argv1 = sys.argv[1]
+    has_url = 1
+except:
+    has_url = 0
+
+
+if has_url:
     # Load the data that PHP sent us
     try:
-        data = json.loads(base64.b64decode(sys.argv[1]))
-        sample_url = data['url']  
+        data = json.loads(base64.b64decode(argv1))
+        sample_url = data['url']
+        
+        print sample_url  
 
         summary = summarize(url=sample_url)
         
