@@ -144,9 +144,9 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
 if 1:
     # Load the data that PHP sent us
     try:
-#        data = json.loads(base64.b64decode(sys.argv[1]))
-#        sample_url = data['url']  
-        sample_url = 'http://dantri.com.vn/nhip-song-tre/ong-truong-gia-binh-thanh-cong-den-tu-dam-me-va-khac-biet-853163.htm'        
+        data = json.loads(base64.b64decode(sys.argv[1]))
+        sample_url = data['url']  
+
         summary = summarize(url=sample_url)
         
         str_top_n = " ".join(summary['top_n_summary'])
