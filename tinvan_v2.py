@@ -108,7 +108,7 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
         text = text.encode('utf-8')
         tokens_vn = nltk.tokenize.word_tokenize(str(text))
         tokens_vn = [w for w in tokens_vn if not w in stopset]
-        print tokens_vn
+#        print tokens_vn
         
     stopset = stopset.union(set(tokens_vn))
 #    stopset = set(tokens_vn)
@@ -139,12 +139,16 @@ def summarize(url=None, html=None, n=100, cluster_threshold=5, top_sentences=5):
                 mean_scored_summary=[sentences[idx] for (idx, score) in mean_scored])
 
 # Main
-
-if 0:
+try:
+    sys.argv[1]
+    has_url = 1
+except:    
+    has_url = 0
+    
+if has_url:
     # Load the data that PHP sent us
     try:
-        data = json.loads(base64.b64decode(sys.argv[1]))     
-        
+        data = json.loads(base64.b64decode(sys.argv[1]))
         sample_url = data['url']
         
         summary = summarize(url=sample_url)
